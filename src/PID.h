@@ -30,8 +30,7 @@ class PID {
    * @output The total PID error
    */
   double TotalError();
-
- private:
+  
   /**
    * PID Errors
    */
@@ -39,12 +38,26 @@ class PID {
   double i_error;
   double d_error;
 
+ private:
+  // Limit I scope
+  int i;
+  double *window;
+  double total_cte;
+  
+  // Backprop
+  double epoch_absolute_error;
+  double epoch_squared_error;
+  int epoch_count;
+  double prev_rmse;
+
   /**
    * PID Coefficients
    */ 
   double Kp;
   double Ki;
   double Kd;
+  
+  void Backprop();
 };
 
 #endif  // PID_H
